@@ -15,7 +15,6 @@ window.addEventListener("DOMContentLoaded", refresh);
 async function refresh() {
   try {
     let response = await axios.get(`${url}/user/allappointments`);
-    // console.log(response.data);
 
     for (let i = 0; i < response.data.length; i++) {
       displayUserOnScreen(response.data[i]);
@@ -94,11 +93,10 @@ function editUser(userName, userEmail, userPhone, userDate, id) {
 
 async function addEditedUser(userDetailsObj, id) {
 
-  idInput.value = ""; // kyunki ye apne aap nhi htegi aur fir ek baar kisi user ko edit kr diya to fir aage whi user edit hota rhega jb bhi hum nya user add krne ki kosish krenge
+  idInput.value = "";
 
   try {
     let response = await axios.put(`${url}/user/appointment/edit/${id}`,userDetailsObj);
-    // console.log(response);
     
     document.getElementById(`${id}`).style.display = "block";
     
@@ -140,17 +138,3 @@ function displayUserOnScreen(userDetailsObj) {
 }
 
 
-/*
-Explanation:
-Pichle aur iss version me maine kuch changes kre hai
-sbse pahle to routes change kre h
-controller me data json me bheja h sb fxn me aur sb fxns me error ka structure same kra h
-
-Aur edit ki functionality add kri h bdia trike se put ka use krke
-Humne ek hidden input bnaya h jisme hum edit pe click krne pe wo hidden input me id daal dete h
-aur saath me apne div ki display none kr dete h
-aur jb fir form submit hota h to id aayi h ya nhi uske basis pe user ko identify krte h ki nya user add ho rha h ya edited
-agr nya h to addUser fxn chala dete h nhi to addEditedUser fxn chla deta h jisme hum put ka use krke db me update kr dete h
-aur card ki display ko firse block kr dete h
-aur agr by chance user form me already existed email daal deta h update ke time to us case ko bhi humne handle kr rkha h
-*/
