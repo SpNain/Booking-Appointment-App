@@ -5,6 +5,7 @@ const nameInput = document.querySelector("#name");
 const emailInput = document.querySelector("#email");
 const phoneInput = document.querySelector("#phone");
 const dateInput = document.querySelector("#date");
+const idInput = document.querySelector("#idInput");
 
 const bookingForm = document.querySelector("#bookingForm");
 bookingForm.addEventListener("submit", onSubmit);
@@ -15,6 +16,7 @@ async function refresh() {
   try {
     let response = await axios.get(`${url}/user/allappointments`);
     // console.log(response.data);
+
     for (let i = 0; i < response.data.length; i++) {
       displayUserOnScreen(response.data[i]);
     }
@@ -26,23 +28,13 @@ async function refresh() {
 function onSubmit(event) {
   event.preventDefault();
 
-  addUser();
-
-  nameInput.value = "";
-  emailInput.value = "";
-  phoneInput.value = "";
-  dateInput.value = "";
-}
-
-async function addUser() {
-  console.log("addUser run")
+  
   let userDetailsObj = {
     userName: `${nameInput.value}`,
     userEmail: `${emailInput.value}`,
     userPhone: `${phoneInput.value}`,
     userDate: `${dateInput.value}`
   };
-  console.log(userDetailsObj);
   
   if (
     userDetailsObj.userName == "" ||
@@ -52,39 +44,82 @@ async function addUser() {
   ) {
     alert(`Fill all the details`);
   } else {
+    
+    if (idInput.value == '') {
+      addUser(userDetailsObj);
+    }
+    else {
+      addEditedUser(userDetailsObj, idInput.value);
+    }
+
+  }
+
+  nameInput.value = "";
+  emailInput.value = "";
+  phoneInput.value = "";
+  dateInput.value = "";
+}
+
+async function addUser(userDetailsObj) {
     try {
-      console.log(userDetailsObj);
-      let response = await axios.post(`${url}/user/appointments`, userDetailsObj);
-      console.log(response.data);
-      if(response.data == 'Duplicate Entry'){
-        alert(`${userDetailsObj.userEmail} already exists. Try another Email.`);
-      } else {
-        displayUserOnScreen(response.data);
-      }
+      let response = await axios.post(`${url}/user/form`, userDetailsObj);
+      displayUserOnScreen(response.data);
     } catch (error) {
+      alert(`${userDetailsObj.userEmail} already exists. Try another Email.`);
       console.log(error);
     }
-  }
 }
 
 async function deleteUser(id) {
 
   try {
-    await axios.delete(`${url}/user/appointments/delete/${id}`);
+    await axios.delete(`${url}/user/appointment/delete/${id}`);
     document.getElementById(`${id}`).remove();
   } catch (error) {
     console.log(error);
   }
 }
 
-function editUser(id,userName, userEmail, userPhone, userDate) {
+function editUser(userName, userEmail, userPhone, userDate, id) {
 
   nameInput.value = userName;
   emailInput.value = userEmail;
   phoneInput.value = userPhone;
   dateInput.value = userDate;
+  idInput.value = id;
 
-  deleteUser(id);
+  document.getElementById(`${id}`).style.display = "none";
+
+}
+
+async function addEditedUser(userDetailsObj, id) {
+
+  idInput.value = ""; // kyunki ye apne aap nhi htegi aur fir ek baar kisi user ko edit kr diya to fir aage whi user edit hota rhega jb bhi hum nya user add krne ki kosish krenge
+
+  try {
+    let response = await axios.put(`${url}/user/appointment/edit/${id}`,userDetailsObj);
+    // console.log(response);
+    
+    document.getElementById(`${id}`).style.display = "block";
+    
+    document.getElementById(`${id}`).innerHTML =
+    `<div>
+    <h5> ${response.data.userName} </h5>
+    <h6> Email : ${response.data.userEmail} </h6>
+    <h6> Phone Number : ${response.data.userPhone} </h6>
+    <h6> Date : ${response.data.userDate} </h6>
+    </div>
+    <div class ="d-flex justify-content-end">
+    <button class="btn btn-danger m-2 p-2" onclick="deleteUser(${response.data.id})">X</button>
+    <button class="btn btn-primary m-2 p-2" onclick="editUser('${response.data.userName}', '${response.data.userEmail}', '${response.data.userPhone}', '${response.data.userDate}', '${response.data.id}')">Edit</button>
+    </div>`;
+  }
+  catch (error) {
+    document.getElementById(`${id}`).style.display = "block";
+    alert(`${userDetailsObj.userEmail} already exists. Try another Email.`);
+    console.log(error);
+  }
+  
 }
 
 function displayUserOnScreen(userDetailsObj) {
@@ -99,7 +134,7 @@ function displayUserOnScreen(userDetailsObj) {
   </div>
   <div class ="d-flex justify-content-end">
   <button class="btn btn-danger m-2 p-2" onclick="deleteUser(${userDetailsObj.id})">X</button>
-  <button class="btn btn-primary m-2 p-2" onclick="editUser('${userDetailsObj.id}', '${userDetailsObj.userName}', '${userDetailsObj.userEmail}', '${userDetailsObj.userPhone}', '${userDetailsObj.userDate}')">Edit</button>
+  <button class="btn btn-primary m-2 p-2" onclick="editUser('${userDetailsObj.userName}', '${userDetailsObj.userEmail}', '${userDetailsObj.userPhone}', '${userDetailsObj.userDate}', '${userDetailsObj.id}')">Edit</button>
   </div>
   </div>`;
 }
@@ -107,23 +142,15 @@ function displayUserOnScreen(userDetailsObj) {
 
 /*
 Explanation:
-Humne is update me crud crud ko replace krke khud ka backend use kiya hai.
-Jaha pe pahle hum axios ka use krke crud crud pe request bhej rhe the, uski jagah ab humne wo saare get,post,delete,put wale kaam apne backend ka use krke kre h
-Aur kyunki ab api calls ki dikkat nhi thi to maine responseData array se related code ko hta diya h aur baar baar api calls waala raasta choose kra h
-kyunki responseData array hi delete ho gya h to usse related UpdateResponseData aur getTargetObj (jisme hum responseData use krte the) bhi hta diye kyunki inka koi kaam nhi rha ab
+Pichle aur iss version me maine kuch changes kre hai
+sbse pahle to routes change kre h
+controller me data json me bheja h sb fxn me aur sb fxns me error ka structure same kra h
 
-
-Ab aa jaate h ki humne kya kya changes kre h code me
-UI to mostly same hi h bas All Bookings ki jagah All Appointments kra h
-addDetailsCard, deleteDetailsCard and editDetailsCard fxn ko rename krke addUser, deleteUser and editUser kr diya h resp.
-Aur pahle jo mai card ke andar hi ek mini form bna rha tha use hta diya h aur uske htne pe fir usse related addEditedCard fxn bhi delete krna pda
-Waise mini form wali approach better thi kyunki usme hum put ka use kr rhe the lekin usse code thoda lamba aur complicated ho rha tha to maine jitna tasks me bola gya h utna hi krne ke liye us extra mehnat wali chij ko hta diya h
-aur simple bde wale form ko re-popoulate krke aur delete fxn ka use krke edit kr rha hu
-
-Baaki main code whi hi h bas backend change hua h
-Aur pahle mai delete aur edit ke liye id getTargetObj fxn ka use krke nikal rha tha lekin ab uski jagah mai simple id ko in case of delete and saari details ko in case of edit pass kr rha hu user ka card bnate time
-aur pahle card ki id unique key ko bna rha tha but abhi backend se generate hue id ko bna rha hu
-ye sb mai pahle bhi kr skta tha kyunki iske liye koi api calls ki jrurat nhi h bas pahle mere dimag me nhi aaya aur ab aa gya
-
-Baaki backend simple h dekhke smjh aa jaayega aur agr nhi aaye to web ka use kr lio yaa fir iss backend module ke previous chapters ka 
+Aur edit ki functionality add kri h bdia trike se put ka use krke
+Humne ek hidden input bnaya h jisme hum edit pe click krne pe wo hidden input me id daal dete h
+aur saath me apne div ki display none kr dete h
+aur jb fir form submit hota h to id aayi h ya nhi uske basis pe user ko identify krte h ki nya user add ho rha h ya edited
+agr nya h to addUser fxn chala dete h nhi to addEditedUser fxn chla deta h jisme hum put ka use krke db me update kr dete h
+aur card ki display ko firse block kr dete h
+aur agr by chance user form me already existed email daal deta h update ke time to us case ko bhi humne handle kr rkha h
 */
