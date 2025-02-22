@@ -15,7 +15,7 @@
         <input class="form-control" type="text" name="name" placeholder="Your Name">
             
         <label>Email</label>
-        <input class="form-control" type="email" name="email" placeholder="youremail@gmail.com">
+        <input class="form-control" type="email" name="email" placeholder="youremail@gmail.com" required>
             
         <label>Phone Number</label>
         <input class="form-control" type="text" name="phone" placeholder="Phone Number">
@@ -25,6 +25,8 @@
 
         <button class="btn">Get a Call</button>
     </form>
+
+    <div class="detailDiv"></div>
     
     <script>
 
@@ -39,7 +41,25 @@
                 "Date" : event.target.date.value
             };
 
-            localStorage.setItem('Person Details', JSON.stringify(detailObj));
+            let uniqueKey = detailObj.Email;
+            
+            localStorage.setItem(uniqueKey, JSON.stringify(detailObj));
+
+            document.querySelector(".detailDiv").innerHTML += 
+            `<div class="card" style="width: 18rem;">
+                <div class="card-body" style="background-color: rgba(0,0,0,0.3);">
+                    <h5 class="card-title">${detailObj.Name}</h5>
+                    <p class="card-text">
+                        <h6> Email : ${detailObj.Email} </h6>
+                        <h6> Phone Number : ${detailObj['Phone Number']} </h6>
+                    </p>
+                </div>
+            </div>`
+
+            event.target.name.value = "";
+            event.target.email.value = "";
+            event.target.phone.value = "";
+            event.target.date.value = "";
         }
 
     </script>

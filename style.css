@@ -63,3 +63,19 @@ body{
 input[placeholder]:focus{
   box-shadow: 0 0 5px #fff;
 }
+
+.detailDiv{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: flex-start;
+  position: absolute;
+  top: 100%;
+}
+
+.card{
+  width: 200px;
+  margin: 5px;
+  background: transparent;
+  color: white;
+}
