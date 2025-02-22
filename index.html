@@ -23,7 +23,7 @@
         <label>Date</label>
         <input class="form-control" type="date" name="date">
 
-        <button class="btn">Get a Call</button>
+        <button class="button">Get a Call</button>
     </form>
 
     <div class="detailDiv"></div>
@@ -34,6 +34,19 @@
         function showDetails(event) {
             event.preventDefault();
 
+            addCard(event);
+
+            // empty input fields
+            event.target.name.value = "",
+            event.target.email.value = "",
+            event.target.phone.value = "",
+            event.target.date.value = ""
+
+        }
+
+        function addCard(event){
+
+            // in local storage
             let detailObj = {
                 "Name" : event.target.name.value,
                 "Email" : event.target.email.value,
@@ -42,24 +55,37 @@
             };
 
             let uniqueKey = detailObj.Email;
-            
-            localStorage.setItem(uniqueKey, JSON.stringify(detailObj));
+            if(detailObj.Name == '' || detailObj["Phone Number"] == ''){ // emails is already required && date doesn't included
+                alert(`Fill all the details`);
+            }
+            else if(localStorage.getItem(detailObj.Email)){
+                alert(`${detailObj.Email} already exists. Try another Email.`);
+            }
+            else{
+                localStorage.setItem(uniqueKey, JSON.stringify(detailObj));
+    
+                // on UI
+                document.querySelector(".detailDiv").innerHTML += 
+                `<div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${detailObj.Name}</h5>
+                        <p class="card-text">
+                            <h6> Email : ${detailObj.Email} </h6>
+                            <h6> Phone Number : ${detailObj['Phone Number']} </h6>
+                            <button class="btn btn-danger btn-sm delete float-right" id=${detailObj.Email} onclick="deleteCard(event)">X</button>
+                        </p>
+                    </div>
+                </div>`
+            }
+        }
 
-            document.querySelector(".detailDiv").innerHTML += 
-            `<div class="card" style="width: 18rem;">
-                <div class="card-body" style="background-color: rgba(0,0,0,0.3);">
-                    <h5 class="card-title">${detailObj.Name}</h5>
-                    <p class="card-text">
-                        <h6> Email : ${detailObj.Email} </h6>
-                        <h6> Phone Number : ${detailObj['Phone Number']} </h6>
-                    </p>
-                </div>
-            </div>`
+        function deleteCard(event){
 
-            event.target.name.value = "";
-            event.target.email.value = "";
-            event.target.phone.value = "";
-            event.target.date.value = "";
+            // from local storage
+            localStorage.removeItem(event.target.id);
+
+            // from UI
+            event.target.parentNode.parentNode.remove();
         }
 
     </script>
