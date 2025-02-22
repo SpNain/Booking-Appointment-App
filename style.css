@@ -1,5 +1,7 @@
 body{
   background: linear-gradient(45deg,black,white);
+  height: 100vh;
+  width: 100vw;
 }
 .container{
   z-index: 2;
@@ -7,10 +9,11 @@ body{
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+  /* width: 2000px; */
 }
-.reg-form{
-  height: 65%;
-  width: 370px;
+.form-group{
+  /* height: 65%; */
+  /* width: 370px; */
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -20,17 +23,18 @@ body{
   color: #fff;
   padding-top: 20px;
 }
+
 .reg h1{
   letter-spacing: 1px;
 }
-.reg-form label{
+.form-group label{
   font-size: 22px;
   margin: 10px;
   margin-top: 20px;
 }
-input{
-  width: 260px;
-  height: 30px;
+.form-control{
+  width: 80%;
+  /* height: 30px; */
   padding-left: 15px;
   background: transparent;
   outline: none;
