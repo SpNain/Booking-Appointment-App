@@ -3,74 +3,27 @@ body{
   background-attachment: fixed;
 }
 
-.container{
-  height: 80%;
-  width: 40%;
-  border-radius: 10px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: auto;
-
-  background-color: black;
+.transparent-container{
+  background: black;
   box-shadow: 0 0 10px rgb(255, 255, 255);
-  color: #fff;
-  padding-top: 20px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.container h1{
-  letter-spacing: 1px;
-  margin: auto;
-  color: gray;
-}
-.container label{
-  font-size: 22px;
-  margin: 10px;
-  margin-top: 20px;
-}
-.form-control{
-  width: 80%;
-  padding-left: 15px;
-  font-size: 13px;
-  border-radius: 30px;
 }
 
 .button{
-  width: 20%;
-  padding: 5px 20px;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  width: 30%;
   background: transparent;
   border-radius: 30px;
-  box-shadow: 0 0 4px #fff;
   cursor: pointer;
   color: white;
 }
 
 .button:hover{
-  background-color: rgba(0,0,0,0.3);
+  background-color: white;
   box-shadow: 0 0 13px #fff;
-  color: white;
+  color: black;
 }
 
 input[placeholder]:focus{
-  box-shadow: 0 0 5px #fff;
-}
-
-.detailDiv{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-content: flex-start;
-  position: absolute;
-  top: 100%;
+  box-shadow: 0 0 10px #060606;
 }
 
 .card{
@@ -79,4 +32,5 @@ input[placeholder]:focus{
   color: white;
   border-color: white;
   border-radius: 20px;
+  padding: 10px;
 }
