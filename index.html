@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <form action="#" class="container" onsubmit="showDetails(event)">
+        <div class="reg-form">
+            <div class="reg">
+                <h1>Book A Call</h1>
+            </div>
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Your Name">
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="youremail@gmail.com">
+
+            <label>Phone Number</label>
+            <input type="text" name="phone" placeholder="Phone Number">
+
+            <label>Date</label>
+            <input type="date" name="date">
+
+            <label>Time</label>
+            <input type="time" name="time">
+
+            <button class="btn">Get a Call</button>
+        </div>
+    </form>
+
+    <script>
+
+        function showDetails() {
+            event.preventDefault();
+            alert(`Thank you, ${event.target.name.value} we will call you at ${event.target.time.value} on ${event.target.date.value} || Your Contact Details : Your phone number is ${event.target.phone.value} and your email address is ${event.target.email.value}.`);
+        }
+
+    </script>
+</body>
+</html>

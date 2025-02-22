@@ -1,0 +1,59 @@
+body{
+  background: linear-gradient(45deg,black,white);
+}
+.container{
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.reg-form{
+  height: 65%;
+  width: 370px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+  color: #fff;
+  padding-top: 20px;
+}
+.reg h1{
+  letter-spacing: 1px;
+}
+.reg-form label{
+  font-size: 22px;
+  margin: 10px;
+  margin-top: 20px;
+}
+input{
+  width: 260px;
+  height: 30px;
+  padding-left: 15px;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  border-radius: 30px;
+  box-shadow: 0 0 4px #fff;
+  transition: box-shadow 0.5s ease;
+  color: #ffffff;
+}
+
+.btn{
+  padding: 5px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: transparent;
+  border-radius: 30px;
+  box-shadow: 0 0 4px #fff;
+  cursor: pointer;
+}
+
+input[placeholder]:focus{
+  color: #fff;
+}
+input:focus,.btn:hover{
+  box-shadow: 0 0 10px #fff;
+}
