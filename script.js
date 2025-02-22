@@ -75,12 +75,12 @@ function displayUserOnScreen(userDetailsObj) {
 function updateResponseData(userDetailsObj, targetId) {
   if (userDetailsObj) {
     responseData.push(userDetailsObj);
-    console.log(responseData);
+    // console.log(responseData);
   } else {
     responseData = responseData.filter(
       (userDetailsObj) => userDetailsObj._id != targetId
     );
-    console.log(responseData);
+    // console.log(responseData);
   }
 }
 
@@ -92,7 +92,6 @@ function isEmailExist(userDetailsObj) {
 }
 
 function deleteDetailsCard(event) {
-  // from crudcrud
   let targetId = "";
 
   for (let i = 0; i < responseData.length; i++) {
@@ -105,24 +104,32 @@ function deleteDetailsCard(event) {
   axios
     .delete(`${url}/${targetId}`)
     .then((response) => {
-      console.log(response);
-      updateResponseData(null, targetId); // responseData me se jo object abhi delete kra h usko nikal denge
+    //   console.log(response);
+      updateResponseData(null, targetId);
     })
     .catch((error) => console.log(error));
 
-  // from UI
   event.target.parentNode.parentNode.remove();
 }
 
 function editDetailsCard(event) {
-  let userDetailsObj = JSON.parse(
-    localStorage.getItem(event.target.parentNode.parentNode.id)
-  );
+  // get detail object using stored data
+  let targetObj = "";
 
-  nameInput.value = userDetailsObj.userName;
-  emailInput.value = userDetailsObj.userEmail;
-  phoneInput.value = userDetailsObj.userPhone;
-  dateInput.value = userDetailsObj.userDate;
+  for (let i = 0; i < responseData.length; i++) {
+    if (responseData[i].userEmail == event.target.parentNode.parentNode.id)
+      targetObj = responseData[i];
+  }
 
+  // set details into input fields
+  nameInput.value = targetObj.userName;
+  emailInput.value = targetObj.userEmail;
+  phoneInput.value = targetObj.userPhone;
+  dateInput.value = targetObj.userDate;
+
+  // delete from UI &  crudcrud
   deleteDetailsCard(event);
 }
+
+// hum edit ko put ka use krke bhi kr skte the but humne suru se code aise hi likha h jisme ki edit krne pe details dobara se form me fill ho jaati h
+// put use krne ke liye hume fir alag se pop div/form bnana pdta jisme hum details ko update kr ske
