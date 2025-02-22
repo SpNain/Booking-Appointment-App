@@ -32,15 +32,14 @@
         function showDetails(event) {
             event.preventDefault();
 
-            const name = event.target.name.value;
-            const email = event.target.email.value;
-            const pn = event.target.phone.value;
-            const date = event.target.date.value;
+            let detailObj = {
+                "Name" : event.target.name.value,
+                "Email" : event.target.email.value,
+                "Phone Number" : event.target.phone.value,
+                "Date" : event.target.date.value
+            };
 
-            localStorage.setItem("Name", name);
-            localStorage.setItem("Email", email);
-            localStorage.setItem("Phone Number", pn);
-            localStorage.setItem("Date", date);
+            localStorage.setItem('Person Details', JSON.stringify(detailObj));
         }
 
     </script>
