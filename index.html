@@ -10,34 +10,37 @@
 </head>
 <body>
     <form action="#" class="container" onsubmit="showDetails(event)">
-        <div class="form-group">
-            <div class="reg">
-                <h1>Book A Call</h1>
-            </div>
-            <label>Name</label>
-            <input class="form-control" type="text" name="name" placeholder="Your Name">
+        <h1>Book A Call</h1>
+        <label>Name</label>
+        <input class="form-control" type="text" name="name" placeholder="Your Name">
             
-            <label>Email</label>
-            <input class="form-control" type="email" name="email" placeholder="youremail@gmail.com">
+        <label>Email</label>
+        <input class="form-control" type="email" name="email" placeholder="youremail@gmail.com">
             
-            <label>Phone Number</label>
-            <input class="form-control" type="text" name="phone" placeholder="Phone Number">
+        <label>Phone Number</label>
+        <input class="form-control" type="text" name="phone" placeholder="Phone Number">
             
-            <label>Date</label>
-            <input class="form-control" type="date" name="date">
-            
-            <label>Time</label>
-            <input class="form-control" type="time" name="time">
+        <label>Date</label>
+        <input class="form-control" type="date" name="date">
 
-            <button class="btn">Get a Call</button>
-        </div>
+        <button class="btn">Get a Call</button>
     </form>
     
     <script>
 
-        function showDetails() {
+        // Task Solution
+        function showDetails(event) {
             event.preventDefault();
-            alert(`Thank you, ${event.target.name.value} we will call you at ${event.target.time.value} on ${event.target.date.value} || Your Contact Details : Your phone number is ${event.target.phone.value} and your email address is ${event.target.email.value}.`);
+
+            const name = event.target.name.value;
+            const email = event.target.email.value;
+            const pn = event.target.phone.value;
+            const date = event.target.date.value;
+
+            localStorage.setItem("Name", name);
+            localStorage.setItem("Email", email);
+            localStorage.setItem("Phone Number", pn);
+            localStorage.setItem("Date", date);
         }
 
     </script>

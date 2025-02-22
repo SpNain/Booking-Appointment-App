@@ -1,63 +1,65 @@
 body{
-  background: linear-gradient(45deg,black,white);
-  height: 100vh;
-  width: 100vw;
+  background: linear-gradient(45deg,black,gray);
+  background-attachment: fixed;
 }
+
 .container{
-  z-index: 2;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  /* width: 2000px; */
-}
-.form-group{
-  /* height: 65%; */
-  /* width: 370px; */
+  height: 80%;
+  width: 40%;
   border-radius: 10px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(0,0,0,0.3);
+  overflow: auto;
+
+  background-color: black;
   box-shadow: 0 0 10px rgb(255, 255, 255);
   color: #fff;
   padding-top: 20px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.reg h1{
+.container h1{
   letter-spacing: 1px;
+  margin: auto;
+  color: gray;
 }
-.form-group label{
+.container label{
   font-size: 22px;
   margin: 10px;
   margin-top: 20px;
 }
 .form-control{
   width: 80%;
-  /* height: 30px; */
   padding-left: 15px;
-  background: transparent;
-  outline: none;
   font-size: 13px;
   border-radius: 30px;
-  box-shadow: 0 0 4px #fff;
-  transition: box-shadow 0.5s ease;
-  color: #ffffff;
 }
 
 .btn{
+  width: 20%;
   padding: 5px 20px;
+  margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   background: transparent;
   border-radius: 30px;
   box-shadow: 0 0 4px #fff;
   cursor: pointer;
+  color: white;
+}
+
+.btn:hover{
+  background-color: rgba(0,0,0,0.3);
+  box-shadow: 0 0 13px #fff;
+  color: white;
 }
 
 input[placeholder]:focus{
-  color: #fff;
-}
-input:focus,.btn:hover{
-  box-shadow: 0 0 10px #fff;
+  box-shadow: 0 0 5px #fff;
 }
